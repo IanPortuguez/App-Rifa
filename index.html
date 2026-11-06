@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#f6f7fb">
+    <title>Control de Rifa</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="top">
+        <div>
+          <h1>Control de rifa</h1>
+        </div>
+        <div class="topactions">
+          <span class="price">
+            Precio del número
+            <input
+              id="priceInput"
+              type="text"
+              value="₡2 000"
+              aria-label="Precio del número"
+            >
+          </span>
+          <button type="button" id="resetBtn" class="danger">
+            Restablecer rifa
+          </button>
+        </div>
+      </header>
+
+      <div id="notice" class="notice" role="status" hidden></div>
+
+      <section class="stats">
+        <div class="stat">
+          <span>Disponibles</span>
+          <b id="availableCount">100</b>
+        </div>
+        <div class="stat">
+          <span>Asignados</span>
+          <b id="assignedCount">0</b>
+        </div>
+        <div class="stat">
+          <span>Recaudado</span>
+          <b id="collectedCount">₡0</b>
+        </div>
+        <div class="stat">
+          <span>Por cobrar</span>
+          <b id="dueCount">₡0</b>
+        </div>
+      </section>
+
+      <nav class="tabs">
+        <button id="numbersTab" class="active" type="button">Números</button>
+        <button id="paymentsTab" type="button">Pagos</button>
+      </nav>
+
+      <div id="numbersView">
+        <section class="panel">
+          <div class="sectionhead">
+            <h2>Números de la rifa</h2>
+            <button type="button" class="outline" id="copyBtn">
+              Copiar números disponibles
+            </button>
+          </div>
+          <div class="filters">
+            <input
+              id="search"
+              placeholder="Buscar número o comprador"
+              aria-label="Buscar número o comprador"
+            >
+            <select id="filter" aria-label="Filtrar por estado">
+              <option value="todos">Todos</option>
+              <option value="libre">Libres</option>
+              <option value="pendiente">Pendientes</option>
+              <option value="pagado">Pagados</option>
+            </select>
+          </div>
+          <div class="legend">
+            <span><i class="dot free"></i> Libre</span>
+            <span><i class="dot pending"></i> Pendiente</span>
+            <span><i class="dot paid"></i> Pagado</span>
+            <span><i class="dot chosen"></i> Seleccionado</span>
+          </div>
+          <div id="grid" class="numgrid"></div>
+          <p id="noNumbers" hidden>No hay resultados.</p>
+        </section>
+
+        <form class="panel" id="assignForm">
+          <p class="sub" id="selectionText">Seleccionados: Ninguno</p>
+          <div class="inline">
+            <input
+              id="buyerInput"
+              maxlength="100"
+              autocomplete="off"
+              placeholder="Nombre del comprador"
+              aria-label="Nombre del comprador"
+              required
+            >
+            <button id="assignBtn" type="submit">Guardar comprador</button>
+            <button id="clearSelection" type="button" class="outline">
+              Cancelar selección
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div id="paymentsView">
+        <section class="panel">
+          <h2>Registrar abono</h2>
+          <form id="paymentForm" class="inline">
+            <label>
+              Comprador
+              <select id="paymentBuyer">
+                <option value="">Seleccionar comprador</option>
+              </select>
+            </label>
+            <label>
+              Abono (₡)
+              <input
+                id="paymentAmount"
+                type="number"
+                min="1"
+                step="1"
+                placeholder="Monto"
+              >
+            </label>
+            <button type="submit">Registrar abono</button>
+            <button type="button" class="outline" id="fillPayment">
+              Completar pago
+            </button>
+          </form>
+          <p class="hint" id="paymentDetail"></p>
+        </section>
+
+        <section class="panel">
+          <h2>Pagos por comprador</h2>
+          <div class="tablewrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Comprador</th>
+                  <th>Números</th>
+                  <th>Total</th>
+                  <th>Abonado</th>
+                  <th>Saldo</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="buyersBody"></tbody>
+            </table>
+          </div>
+          <p id="noBuyers" hidden>Sin compradores registrados.</p>
+        </section>
+      </div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
